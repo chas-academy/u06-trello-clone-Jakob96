@@ -1,0 +1,39 @@
+html,
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin: 20px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.flex-grid {
+    display: flex;
+    columns: 3;
+
+    .card-layout {
+        background: #ebecf0;
+        width: 100%;
+    }
+
+    .card-layout +.card-layout {
+        margin-left: 10px;
+    }
+}
+
+.list {
+    margin: 0;
+    padding: 10px;
+    min-height: 90%;
+
+    .card {
+        margin-bottom: 10px;
+        min-height: 80px;
+    }
+}
