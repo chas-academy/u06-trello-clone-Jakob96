@@ -1,10 +1,6 @@
 $( function() {
     $( ".card-layout" ).tabs();
 
-    $( ".add-card" ).click(function(e) {
-        addCard(this);
-      });
-
     $( ".list" ).sortable({
       update: function(event, ui) {
         if ($("ul." + event.target.classList[1] + " li").length == 0) {
