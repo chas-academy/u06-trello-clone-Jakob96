@@ -22,6 +22,10 @@ ul {
   background: #ebecf0;
   width: 100%;
 }
+.flex-grid .card-layout .ui-widget-header {
+  background: none;
+  border: 0;
+}
 .flex-grid .card-layout + .card-layout {
   margin-left: 10px;
 }
