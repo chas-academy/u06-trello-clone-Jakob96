@@ -34,6 +34,7 @@ $( function() {
         }
       },
         connectWith: ".list",
+        cancel: ".empty-list"
       }).disableSelection();
 
       function addEmptyListText(element) {
