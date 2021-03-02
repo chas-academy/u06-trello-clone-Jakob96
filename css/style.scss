@@ -55,3 +55,8 @@ textarea {
     resize: none;
     width: 100%;
 }
+
+button:hover,
+.card:hover {
+    cursor: pointer;
+}

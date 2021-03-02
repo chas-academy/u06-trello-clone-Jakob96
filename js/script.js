@@ -12,7 +12,7 @@ $( function() {
 
     $(".datepicker").datepicker();
 
-    $("button.edit").on("click", function() {
+    $("button.edit, .card").on("click", function() {
       $('#card-info').dialog('open').effect("bounce", {times: 2}, 250);
     });
 
