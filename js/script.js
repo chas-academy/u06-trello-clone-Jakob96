@@ -1,7 +1,11 @@
 $( function() {
-  addColumn("Todo");
-  addColumn("Doing");
-  addColumn("Done");
+    addColumn("Todo");
+    addColumn("Doing");
+    addColumn("Done");
+
+    addCard("Test", "Todo");
+    addCard("Test", "Todo");
+    addCard("Test", "Todo");
 
     $( ".card-layout, #tabs" ).tabs();
 
@@ -45,5 +49,11 @@ $( function() {
       
           const col = section.append(tab).append(cardList);
           $("section.flex-grid").append(col);
+      }
+
+      function addCard(title, col) {
+        const editBtn = $("<button>").attr("class", "edit").html("Edit");
+        const card = $("<li>").attr("class", "ui-state-default card").html(title).append(editBtn);
+        $(document).find("ul." + col.toLowerCase()).append(card);
       }
   } );
