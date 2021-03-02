@@ -13,6 +13,10 @@ ul {
   list-style-type: none;
 }
 
+.float-right {
+  float: right;
+}
+
 .flex-grid {
   display: flex;
   -moz-columns: 3;
