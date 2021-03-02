@@ -1,4 +1,8 @@
 $( function() {
+  addColumn("Todo");
+  addColumn("Doing");
+  addColumn("Done");
+
     $( ".card-layout, #tabs" ).tabs();
 
     $("#card-info").dialog({
@@ -31,5 +35,15 @@ $( function() {
       function addEmptyListText(element) {
             const emptyListText = $("<li>").attr("class", "empty-list").html("Drag a card here");
             $(element).append(emptyListText);
+      }
+
+      function addColumn(title) {
+          const section = $("<section>").attr("class", "card-layout");
+          const tab = $("<ul>").append("<li>").html(title);
+          const emptyListText = $("<li>").attr("class", "empty-list").html("Drag a card here");
+          const cardList = $("<ul>").attr("class", "list " + title.toLowerCase()).append(emptyListText);
+      
+          const col = section.append(tab).append(cardList);
+          $("section.flex-grid").append(col);
       }
   } );
