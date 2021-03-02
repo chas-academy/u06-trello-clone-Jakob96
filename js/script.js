@@ -1,5 +1,18 @@
 $( function() {
-    $( ".card-layout" ).tabs();
+    $( ".card-layout, #tabs" ).tabs();
+
+    $("#card-info").dialog({
+      autoOpen: false,
+      modal: true,
+      resizable: false,
+      draggable: false
+    });
+
+    $(".datepicker").datepicker();
+
+    $("button.edit").on("click", function() {
+      $('#card-info').dialog('open');
+    });
 
     $( ".list" ).sortable({
       update: function(event, ui) {

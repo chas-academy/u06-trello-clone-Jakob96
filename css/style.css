@@ -38,4 +38,17 @@ ul {
 .list .card {
   margin-bottom: 10px;
   min-height: 80px;
+}
+
+.ui-dialog {
+  left: 20% !important;
+  top: 10% !important;
+  width: 60% !important;
+}
+
+textarea {
+  display: block;
+  margin-bottom: 10px;
+  resize: none;
+  width: 100%;
 }/*# sourceMappingURL=style.css.map */
