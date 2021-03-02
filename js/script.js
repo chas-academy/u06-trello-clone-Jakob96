@@ -5,13 +5,15 @@ $( function() {
       autoOpen: false,
       modal: true,
       resizable: false,
-      draggable: false
+      draggable: false,
+      show: { effect: "fade", duration: 250 },
+      hide: { effect: "fade", duration: 250 }
     });
 
     $(".datepicker").datepicker();
 
     $("button.edit").on("click", function() {
-      $('#card-info').dialog('open');
+      $('#card-info').dialog('open').effect("bounce", {times: 2}, 250);
     });
 
     $( ".list" ).sortable({
