@@ -39,6 +39,9 @@ ul {
   padding: 10px;
   min-height: 90%;
 }
+.list li.empty-list {
+  text-align: center;
+}
 .list .card {
   margin-bottom: 10px;
   min-height: 80px;

@@ -71,5 +71,7 @@ $( function() {
         const editBtn = $("<button>").attr("class", "edit float-right").html("Edit");
         const card = $("<li>").attr("class", "ui-state-default card").html(title).append(editBtn);
         $(document).find("ul." + col.toLowerCase()).append(card);
+       
+        $(document).find("ul." + col.toLowerCase() + " li.empty-list").remove();
       }
   } );
