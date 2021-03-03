@@ -43,10 +43,10 @@ $( function() {
 
       function addColumn(title) {
           const section = $("<section>").attr("class", "card-layout");
-          const newCardBtn = $("<button>").attr({"class": "new-card float-right", "aria-label": "Add new card", "data-list": title.toLowerCase()}).html("+");
+          const newCardBtn = $("<button>").attr({"class": "new-card float-right", "aria-label": "Add new card", "data-list": title.toLowerCase().replace(" ", "")}).html("+");
           const tab = $("<ul>").append("<li>").html(title).append(newCardBtn);
           const emptyListText = $("<li>").attr("class", "empty-list").html("Drag a card here");
-          const cardList = $("<ul>").attr("class", "list " + title.toLowerCase()).append(emptyListText);
+          const cardList = $("<ul>").attr("class", "list " + title.toLowerCase().replace(" ", "")).append(emptyListText);
       
           const col = section.append(tab).append(cardList);
           $("section.flex-grid").append(col);
@@ -70,8 +70,8 @@ $( function() {
       function addCard(title, col) {
         const editBtn = $("<button>").attr("class", "edit float-right").html("Edit");
         const card = $("<li>").attr("class", "ui-state-default card").html(title).append(editBtn);
-        $(document).find("ul." + col.toLowerCase()).append(card);
+        $(document).find("ul." + col.toLowerCase().replace(" ", "")).append(card);
        
-        $(document).find("ul." + col.toLowerCase() + " li.empty-list").remove();
+        $(document).find("ul." + col.toLowerCase().replace(" ", "") + " li.empty-list").remove();
       }
   } );
