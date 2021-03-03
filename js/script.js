@@ -20,11 +20,11 @@ $( function() {
 
     $(".datepicker").datepicker();
 
-    $(".card-layout").on("click", "button.edit, .card", function() {
+    $(document).on("click", "button.edit, .card", function() {
       $('#card-info').dialog('open').effect("bounce", {times: 2}, 250);
     });
 
-    $("button.new-card").on("click", function() {
+    $(document).on("click", "button.new-card", function() {
       addCard("Write some text...", $(this).attr("data-list"));
     });
 
@@ -35,19 +35,6 @@ $( function() {
         addColumn(title);
       }
     });
-
-    $( ".list" ).sortable({
-      update: function(event, ui) {
-        if ($("ul." + event.target.classList[1] + " li").length == 0) {
-            addEmptyListText(this);
-        }
-        else {
-            $("ul." + event.target.classList[1] + " li").remove(".empty-list");
-        }
-      },
-        connectWith: ".list",
-        cancel: ".empty-list"
-      }).disableSelection();
 
       function addEmptyListText(element) {
             const emptyListText = $("<li>").attr("class", "empty-list").html("Drag a card here");
@@ -65,6 +52,19 @@ $( function() {
           $("section.flex-grid").append(col);
 
           $( ".card-layout" ).tabs();
+
+          $( ".list" ).sortable({
+            update: function(event, ui) {
+              if ($("ul." + event.target.classList[1] + " li").length == 0) {
+                  addEmptyListText(this);
+              }
+              else {
+                  $("ul." + event.target.classList[1] + " li").remove(".empty-list");
+              }
+            },
+              connectWith: ".list",
+              cancel: ".empty-list"
+            }).disableSelection();
       }
 
       function addCard(title, col) {
