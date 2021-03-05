@@ -1,7 +1,15 @@
 $( function() {
-    addColumn("Todo");
-    addColumn("Doing");
-    addColumn("Done");
+  let columns = [];
+  
+    if (localStorage.getItem("columns")) {
+      localStorage.getItem("columns").split(",").forEach((item) => {
+        addColumn(item);
+      })
+    }
+    else {
+      const defaultCols = ["Todo", "Doing", "Done"];
+      defaultCols.forEach((item) => addColumn(item));
+    }
 
     addCard("Test", "Todo");
     addCard("Test", "Todo");
@@ -42,6 +50,9 @@ $( function() {
       }
 
       function addColumn(title) {
+          columns.push(title);
+          localStorage.setItem("columns", columns.join(","));
+
           const section = $("<section>").attr("class", "card-layout");
           const newCardBtn = $("<button>").attr({"class": "new-card float-right", "aria-label": "Add new card", "data-list": title.toLowerCase().replace(" ", "")}).html("+");
           const tab = $("<ul>").append("<li>").html(title).append(newCardBtn);
