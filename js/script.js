@@ -114,7 +114,6 @@ $( function() {
 
         for (let i in cards) {
           if (cards[i].id == id) {
-            console.log(cards[i]);
             cards.splice(i, 1);
             break;
           }
@@ -123,4 +122,15 @@ $( function() {
         localStorage.setItem("cards", JSON.stringify(cards));
         window.location.reload();
       }
+
+      function updateCard(id, property, value) {
+        for (let i in cards) {
+          if (cards[i].id == id) {
+            cards[i][property] = value;
+            break;
+          }
+        }
+
+        localStorage.setItem("cards", JSON.stringify(cards));
+      };      
 });
