@@ -40,7 +40,14 @@ $( function() {
     });
 
     $(document).on("click", "button.delete", function() {
-      removeCard(this.value);
+      const result = confirm("Are you sure?");
+
+      if (result) {
+        removeCard(this.value);
+      }
+      else {
+        return false;
+      }
     });
 
     $("button.add-col").on("click", function() {
