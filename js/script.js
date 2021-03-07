@@ -39,6 +39,10 @@ $( function() {
       localStorage.setItem("cards", JSON.stringify(cards));
     });
 
+    $(document).on("click", "button.delete", function() {
+      removeCard(this.value);
+    });
+
     $("button.add-col").on("click", function() {
       const title = prompt("Enter title");
       
@@ -91,9 +95,25 @@ $( function() {
         cards.push(cardData);
 
         const editBtn = $("<button>").attr("class", "edit float-right").html("Edit");
-        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html(title).append(editBtn);
+        const deleteBtn = $("<button>").attr({"class": "delete float-right", "value": id}).html("Delete");
+        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html(title).append(deleteBtn, editBtn);
         $(document).find("ul." + col.toLowerCase().replace(" ", "")).append(card);
        
         $(document).find("ul." + col.toLowerCase().replace(" ", "") + " li.empty-list").remove();
+      }
+
+      function removeCard(id) {
+        $("#" + id).remove();
+
+        for (let i in cards) {
+          if (cards[i].id == id) {
+            console.log(cards[i]);
+            cards.splice(i, 1);
+            break;
+          }
+        }
+
+        localStorage.setItem("cards", JSON.stringify(cards));
+        window.location.reload();
       }
 });
