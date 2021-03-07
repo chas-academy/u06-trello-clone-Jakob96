@@ -1,6 +1,7 @@
 $( function() {
   let columns = [];
-  
+  let cards = [];
+
     if (localStorage.getItem("columns")) {
       localStorage.getItem("columns").split(",").forEach((item) => {
         addColumn(item);
@@ -11,9 +12,10 @@ $( function() {
       defaultCols.forEach((item) => addColumn(item));
     }
 
-    addCard("Test", "Todo");
-    addCard("Test", "Todo");
-    addCard("Test", "Todo");
+    if (localStorage.getItem("cards")) {
+      let savedCards = JSON.parse(localStorage.getItem("cards"));
+      savedCards.forEach((card) => addCard(card.id, card.description, card.list));
+    }
 
    $( "#tabs" ).tabs();
 
@@ -33,7 +35,8 @@ $( function() {
     });
 
     $(document).on("click", "button.new-card", function() {
-      addCard("Write some text...", $(this).attr("data-list"));
+      addCard("card" + Math.floor(Math.random() * Date.now()), "Write some text...", $(this).attr("data-list"));
+      localStorage.setItem("cards", JSON.stringify(cards));
     });
 
     $("button.add-col").on("click", function() {
@@ -41,6 +44,7 @@ $( function() {
       
       if (title) {
         addColumn(title);
+        localStorage.setItem("columns", columns.join(","));
       }
     });
 
@@ -51,7 +55,6 @@ $( function() {
 
       function addColumn(title) {
           columns.push(title);
-          localStorage.setItem("columns", columns.join(","));
 
           const section = $("<section>").attr("class", "card-layout");
           const newCardBtn = $("<button>").attr({"class": "new-card float-right", "aria-label": "Add new card", "data-list": title.toLowerCase().replace(" ", "")}).html("+");
@@ -78,11 +81,19 @@ $( function() {
             }).disableSelection();
       }
 
-      function addCard(title, col) {
+      function addCard(id, title, col) {
+        let cardData = new Object();
+        cardData.id = id;
+        cardData.description = title;
+        cardData.date = Date("now");
+        cardData.list = col;
+
+        cards.push(cardData);
+
         const editBtn = $("<button>").attr("class", "edit float-right").html("Edit");
-        const card = $("<li>").attr("class", "ui-state-default card").html(title).append(editBtn);
+        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html(title).append(editBtn);
         $(document).find("ul." + col.toLowerCase().replace(" ", "")).append(card);
        
         $(document).find("ul." + col.toLowerCase().replace(" ", "") + " li.empty-list").remove();
       }
-  } );
+});
