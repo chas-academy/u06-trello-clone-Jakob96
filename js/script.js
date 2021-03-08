@@ -135,5 +135,13 @@ $( function() {
         }
 
         localStorage.setItem("cards", JSON.stringify(cards));
-      };      
+      };
+      
+      function getCard(id) {
+        for (let i in cards) {
+          if (cards[i].id == id) {
+            return cards[i];
+          }
+        }
+      }
 });
