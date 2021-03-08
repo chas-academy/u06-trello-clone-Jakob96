@@ -93,11 +93,12 @@ $( function() {
       }
 
       function addCard(id, title, col) {
-        let cardData = new Object();
-        cardData.id = id;
-        cardData.description = title;
-        cardData.date = Date("now");
-        cardData.list = col;
+        const cardData = {
+          id: id,
+          description: title,
+          date: Date("now"),
+          list: col
+        }
 
         cards.push(cardData);
 
