@@ -28,10 +28,27 @@ $( function() {
       hide: { effect: "fade", duration: 250 }
     });
 
-    $(".datepicker").datepicker();
+    $(".datepicker").datepicker({
+      dateFormat: "yy-mm-dd"
+    });
 
-    $(document).on("click", "button.edit, .card", function() {
+    $(document).on("click", "button.edit, .card", function(e) {
+      let cardId = "";
       $('#card-info').dialog('open').effect("bounce", {times: 2}, 250);
+
+      //Check if user clicked on edit button or card
+      if ($(e.target).attr("class").toString().includes("edit")) {
+        cardId = $(e.target).attr("value");
+      }
+      else
+      {
+        cardId = $(this).attr("id");
+      }
+
+      let card = getCard(cardId);
+
+      $("#card-info #description").html(card.description);
+      $(".datepicker").datepicker("setDate", new Date(card.date));
     });
 
     $(document).on("click", "button.new-card", function() {
@@ -95,16 +112,19 @@ $( function() {
       }
 
       function addCard(id, title, col) {
+        const dateNow = new Date();
+        const date = dateNow.getFullYear().toString() + "-" + (dateNow.getMonth() +1).toString() + "-" + dateNow.getDate().toString();
+
         const cardData = {
           id: id,
           description: title,
-          date: Date("now"),
+          date: date,
           list: col
         }
 
         cards.push(cardData);
 
-        const editBtn = $("<button>").attr("class", "edit float-right").html("Edit");
+        const editBtn = $("<button>").attr({"class": "edit float-right", "value": id}).html("Edit");
         const deleteBtn = $("<button>").attr({"class": "delete float-right", "value": id}).html("Delete");
         const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html(title).append(deleteBtn, editBtn);
         $(document).find("ul." + col.toLowerCase().replace(" ", "")).append(card);
