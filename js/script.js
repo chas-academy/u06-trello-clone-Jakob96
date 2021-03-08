@@ -29,7 +29,14 @@ $( function() {
     });
 
     $(".datepicker").datepicker({
-      dateFormat: "yy-mm-dd"
+      dateFormat: "yy-mm-dd",
+      defaultDate: Date.now()
+    });
+
+    $("#description, .datepicker").on("change", function() {
+        updateCard($("input[name='cardid']").attr("value"), "description", $("#description").val());
+        updateCard($("input[name='cardid']").attr("value"), "date", $(".datepicker").val());
+        console.log($(".datepicker").val());
     });
 
     $(document).on("click", "button.edit, .card", function(e) {
