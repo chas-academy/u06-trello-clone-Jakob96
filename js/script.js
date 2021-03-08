@@ -80,6 +80,8 @@ $( function() {
 
           $( ".list" ).sortable({
             update: function(event, ui) {
+              updateCard($(ui.item).attr("id"), "list", event.target.classList[1]);
+
               if ($("ul." + event.target.classList[1] + " li").length == 0) {
                   addEmptyListText(this);
               }
