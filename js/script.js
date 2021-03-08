@@ -47,6 +47,7 @@ $( function() {
 
       let card = getCard(cardId);
 
+      $("input[name='cardid']").attr("value", card.id);
       $("#card-info #description").html(card.description);
       $(".datepicker").datepicker("setDate", new Date(card.date));
     });
