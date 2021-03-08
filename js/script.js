@@ -14,7 +14,7 @@ $( function() {
 
     if (localStorage.getItem("cards")) {
       let savedCards = JSON.parse(localStorage.getItem("cards"));
-      savedCards.forEach((card) => addCard(card.id, card.description, card.list));
+      savedCards.forEach((card) => addCard(card.id, card.description, card.date, card.list));
     }
 
    $( "#tabs" ).tabs();
@@ -25,7 +25,10 @@ $( function() {
       resizable: false,
       draggable: false,
       show: { effect: "fade", duration: 250 },
-      hide: { effect: "fade", duration: 250 }
+      hide: { effect: "fade", duration: 250 },
+      close: function() {
+        location.reload();
+      }
     });
 
     $(".datepicker").datepicker({
@@ -36,13 +39,11 @@ $( function() {
     $("#description, .datepicker").on("change", function() {
         updateCard($("input[name='cardid']").attr("value"), "description", $("#description").val());
         updateCard($("input[name='cardid']").attr("value"), "date", $(".datepicker").val());
-        console.log($(".datepicker").val());
     });
 
     $(document).on("click", "button.edit, .card", function(e) {
       let cardId = "";
       $('#card-info').dialog('open').effect("bounce", {times: 2}, 250);
-
       //Check if user clicked on edit button or card
       if ($(e.target).attr("class").toString().includes("edit")) {
         cardId = $(e.target).attr("value");
@@ -56,11 +57,15 @@ $( function() {
 
       $("input[name='cardid']").attr("value", card.id);
       $("#card-info #description").html(card.description);
+  
       $(".datepicker").datepicker("setDate", new Date(card.date));
     });
 
     $(document).on("click", "button.new-card", function() {
-      addCard("card" + Math.floor(Math.random() * Date.now()), "Write some text...", $(this).attr("data-list"));
+      const dateNow = new Date();
+      const date = dateNow.getFullYear().toString() + "-" + (dateNow.getMonth() +1).toString() + "-" + dateNow.getDate().toString();
+
+      addCard("card" + Math.floor(Math.random() * Date.now()), "Write some text...", date, $(this).attr("data-list"));
       localStorage.setItem("cards", JSON.stringify(cards));
     });
 
@@ -119,10 +124,7 @@ $( function() {
             }).disableSelection();
       }
 
-      function addCard(id, title, col) {
-        const dateNow = new Date();
-        const date = dateNow.getFullYear().toString() + "-" + (dateNow.getMonth() +1).toString() + "-" + dateNow.getDate().toString();
-
+      function addCard(id, title, date, col) {
         const cardData = {
           id: id,
           description: title,
@@ -161,7 +163,7 @@ $( function() {
             break;
           }
         }
-
+       
         localStorage.setItem("cards", JSON.stringify(cards));
       };
       
