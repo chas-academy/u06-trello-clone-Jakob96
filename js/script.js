@@ -45,6 +45,10 @@ $( function() {
         $("#alert").alert(('open'));
     });
 
+    $("button#formClose").on("click", function() {
+        $("#card-info").dialog("close");
+    });
+
     $(document).on("click", "button.edit, .card", function(e) {
       let cardId = "";
       $('#card-info').dialog('open').fadeIn();
