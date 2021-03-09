@@ -75,6 +75,8 @@ $( function() {
       $("#card-info #description").html(card.description);
   
       $(".datepicker").datepicker("setDate", new Date(card.date));
+
+      $("#color").attr("value", card.color);
     });
 
     $(document).on("click", "button.new-card", function() {
