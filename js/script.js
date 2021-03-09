@@ -70,8 +70,7 @@ $( function() {
     });
 
     $(document).on("click", "button.new-card", function() {
-      const dateNow = new Date();
-      const date = dateNow.getFullYear().toString() + "-" + (dateNow.getMonth() +1).toString() + "-" + dateNow.getDate().toString();
+      const date = new Date();
 
       addCard("card" + Math.floor(Math.random() * Date.now()), "Write some text...", date, $(this).attr("data-list"));
       localStorage.setItem("cards", JSON.stringify(cards));
@@ -144,7 +143,7 @@ $( function() {
 
         const editBtn = $("<button>").attr({"class": "edit float-right", "value": id}).html("Edit");
         const deleteBtn = $("<button>").attr({"class": "delete float-right", "value": id}).html("Delete");
-        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html(title).append(deleteBtn, editBtn);
+        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html("<p>" + title + "</p><small>" + new Date(date).toISOString().substr(0, 10) + "</small>").append(deleteBtn, editBtn);
         $(document).find("ul." + col.toLowerCase().replace(" ", "")).append(card);
        
         $(document).find("ul." + col.toLowerCase().replace(" ", "") + " li.empty-list").remove();
