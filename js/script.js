@@ -19,6 +19,8 @@ $( function() {
 
    $( "#tabs" ).tabs();
 
+   $("#alert").alert({ message: "Your changes has been saved!" });
+
     $("#card-info").dialog({
       autoOpen: false,
       modal: true,
@@ -39,6 +41,8 @@ $( function() {
     $("#description, .datepicker").on("change", function() {
         updateCard($("input[name='cardid']").attr("value"), "description", $("#description").val());
         updateCard($("input[name='cardid']").attr("value"), "date", $(".datepicker").val());
+
+        $("#alert").alert(('open'));
     });
 
     $(document).on("click", "button.edit, .card", function(e) {
@@ -153,7 +157,7 @@ $( function() {
         }
 
         localStorage.setItem("cards", JSON.stringify(cards));
-        window.location.reload();
+         window.location.reload();
       }
 
       function updateCard(id, property, value) {
