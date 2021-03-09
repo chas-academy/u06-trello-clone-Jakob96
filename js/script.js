@@ -14,7 +14,7 @@ $( function() {
 
     if (localStorage.getItem("cards")) {
       let savedCards = JSON.parse(localStorage.getItem("cards"));
-      savedCards.forEach((card) => addCard(card.id, card.description, card.date, card.list));
+      savedCards.forEach((card) => addCard(card.id, card.description, card.date, card.list, card.color));
     }
 
    $( "#tabs" ).tabs();
@@ -45,6 +45,14 @@ $( function() {
         $("#alert").alert(('open'));
     });
 
+    $("#color").on("change", function() {
+        const cardId = $("#tabs-1 input[name='cardid']").attr("value");
+        
+        updateCard(cardId, "color", this.value);
+        $("#" + cardId).css({ "background": this.value});
+        $("#alert").alert(('open'));
+    });
+
     $("button#formClose").on("click", function() {
         $("#card-info").dialog("close");
     });
@@ -72,7 +80,7 @@ $( function() {
     $(document).on("click", "button.new-card", function() {
       const date = new Date();
 
-      addCard("card" + Math.floor(Math.random() * Date.now()), "Write some text...", date, $(this).attr("data-list"));
+      addCard("card" + Math.floor(Math.random() * Date.now()), "Write some text...", date, $(this).attr("data-list"), "#f6f6f6");
       localStorage.setItem("cards", JSON.stringify(cards));
     });
 
@@ -131,19 +139,20 @@ $( function() {
             }).disableSelection();
       }
 
-      function addCard(id, title, date, col) {
+      function addCard(id, title, date, col, color) {
         const cardData = {
           id: id,
           description: title,
           date: date,
-          list: col
+          list: col,
+          color: color
         }
 
         cards.push(cardData);
 
         const editBtn = $("<button>").attr({"class": "edit float-right", "value": id}).html("Edit");
         const deleteBtn = $("<button>").attr({"class": "delete float-right", "value": id}).html("Delete");
-        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html("<p>" + title + "</p><small>" + new Date(date).toISOString().substr(0, 10) + "</small>").append(deleteBtn, editBtn);
+        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html("<p>" + title + "</p><small>" + new Date(date).toISOString().substr(0, 10) + "</small>").append(deleteBtn, editBtn).css({"background": color});
         $(document).find("ul." + col.toLowerCase().replace(" ", "")).append(card);
        
         $(document).find("ul." + col.toLowerCase().replace(" ", "") + " li.empty-list").remove();
