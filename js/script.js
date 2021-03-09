@@ -61,8 +61,9 @@ $( function() {
       let cardId = "";
       $('#card-info').dialog('open').fadeIn();
       //Check if user clicked on edit button or card
-      if ($(e.target).attr("class").toString().includes("edit")) {
-        cardId = $(e.target).attr("value");
+    
+      if ($(e.currentTarget).attr("class").toString().includes("edit")) {
+        cardId = $(e.currentTarget).attr("value");
       }
       else
       {
