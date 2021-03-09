@@ -47,7 +47,7 @@ $( function() {
 
     $(document).on("click", "button.edit, .card", function(e) {
       let cardId = "";
-      $('#card-info').dialog('open').effect("bounce", {times: 2}, 250);
+      $('#card-info').dialog('open').fadeIn();
       //Check if user clicked on edit button or card
       if ($(e.target).attr("class").toString().includes("edit")) {
         cardId = $(e.target).attr("value");
