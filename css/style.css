@@ -18,10 +18,33 @@ ul {
   float: right;
 }
 
+button:hover,
+.card:hover {
+  cursor: pointer;
+}
+
+button.add-col {
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+.ui-dialog {
+  left: 20% !important;
+  top: 10% !important;
+  width: 60% !important;
+}
+.ui-dialog #tabs {
+  margin-bottom: 5px;
+}
+.ui-dialog textarea {
+  display: block;
+  margin-bottom: 10px;
+  resize: none;
+  width: 100%;
+}
+
 .flex-grid {
   display: flex;
-  -moz-columns: 3;
-       columns: 3;
 }
 .flex-grid .card-layout {
   background: #ebecf0;
@@ -40,6 +63,9 @@ ul {
   padding: 10px;
   min-height: 90%;
 }
+.list li {
+  padding: 10px;
+}
 .list li.empty-list {
   text-align: center;
 }
@@ -47,21 +73,6 @@ ul {
   margin-bottom: 10px;
   min-height: 80px;
 }
-
-.ui-dialog {
-  left: 20% !important;
-  top: 10% !important;
-  width: 60% !important;
-}
-
-textarea {
-  display: block;
-  margin-bottom: 10px;
-  resize: none;
-  width: 100%;
-}
-
-button:hover,
-.card:hover {
-  cursor: pointer;
+.list .card p {
+  margin-top: 2px;
 }/*# sourceMappingURL=style.css.map */

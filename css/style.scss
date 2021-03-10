@@ -1,3 +1,4 @@
+//Sitewide
 html,
 body {
     box-sizing: border-box;
@@ -14,33 +15,69 @@ ul {
     list-style-type: none;
 }
 
+//Button classes
 .float-right {
     float: right;
 }
 
+button:hover,
+.card:hover {
+    cursor: pointer;
+}
+
+button.add-col {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+//Custom styling to dialog
+.ui-dialog  {
+    left: 20% !important;
+    top: 10% !important;
+    width: 60% !important;
+
+    #tabs {
+        margin-bottom: 5px;
+    }
+
+    textarea {
+        display: block;
+        margin-bottom: 10px;
+        resize: none;
+        width: 100%;
+    }
+}
+
+//Flex grid for cards lists
 .flex-grid {
     display: flex;
-    columns: 3;
 
     .card-layout {
         background: #ebecf0;
         width: 100%;
 
+        //Make default header for tab lists transparent
         .ui-widget-header {
             background: none;
             border: 0;
         }
     }
 
+    //Add some margin if a list is followed by another
     .card-layout +.card-layout {
         margin-left: 10px;
     }
 }
 
+//Styling for the cards and lists holding them
 .list {
     margin: 0;
     padding: 10px;
     min-height: 90%;
+
+    li {
+        padding: 10px;
+    }
 
     li.empty-list {
         text-align: center;
@@ -49,23 +86,9 @@ ul {
     .card {
         margin-bottom: 10px;
         min-height: 80px;
+
+        p {
+            margin-top: 2px;
+        }
     }
-}
-
-.ui-dialog  {
-    left: 20% !important;
-    top: 10% !important;
-    width: 60% !important;
-}
-
-textarea {
-    display: block;
-    margin-bottom: 10px;
-    resize: none;
-    width: 100%;
-}
-
-button:hover,
-.card:hover {
-    cursor: pointer;
 }
