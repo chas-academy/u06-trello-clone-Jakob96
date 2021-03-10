@@ -155,7 +155,7 @@ $( function() {
 
         const editBtn = $("<button>").attr({"class": "edit float-right", "value": id}).html("Edit");
         const deleteBtn = $("<button>").attr({"class": "delete float-right", "value": id}).html("Delete");
-        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html("<p>" + title + "</p><small>" + new Date(date).toISOString().substr(0, 10) + "</small>").append(deleteBtn, editBtn).css({"background": color});
+        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html("<p>" + title.substr(0, 250) + "</p><small>" + new Date(date).toISOString().substr(0, 10) + "</small>").append(deleteBtn, editBtn).css({"background": color});
         $(document).find("ul." + col.toLowerCase().replace(" ", "")).append(card);
        
         $(document).find("ul." + col.toLowerCase().replace(" ", "") + " li.empty-list").remove();
