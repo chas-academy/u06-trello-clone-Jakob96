@@ -17,7 +17,7 @@ $( function() {
   //Get erlier stored cards from local storage and add them
     if (localStorage.getItem("cards")) {
       let savedCards = JSON.parse(localStorage.getItem("cards"));
-      savedCards.forEach((card) => addCard(card.id, card.description, card.date, card.list, card.color));
+      savedCards.forEach((card) => (!card.archived) ? addCard(card.id, card.description, card.date, card.list, card.color, card.archived) : '');
     }
 
   //Init Jquery elements
@@ -108,8 +108,23 @@ $( function() {
       //Add some default data (Current date, text content, list and color)
       const date = new Date();
 
-      addCard("card" + Math.floor(Math.random() * Date.now()), "Write text here", date, $(this).attr("data-list"), "#f6f6f6");
+      addCard("card" + Math.floor(Math.random() * Date.now()), "Write text here", date, $(this).attr("data-list"), "#f6f6f6", false);
       localStorage.setItem("cards", JSON.stringify(cards));
+    });
+
+    //Archive card
+    $(document).on("click", "button.archive", function(e) {
+      const result = confirm("Are you sure?");
+
+      if (result) {
+        updateCard(e.currentTarget.value, "archived", true);
+        localStorage.setItem("cards", JSON.stringify(cards));
+        location.reload();
+      }
+      else {
+        return false;
+      }
+      
     });
 
     //Delete card
@@ -184,21 +199,23 @@ $( function() {
       }
 
       //Add a new card
-      function addCard(id, title, date, col, color) {
+      function addCard(id, title, date, col, color, archived) {
         const cardData = {
           id: id,
           description: title,
           date: date,
           list: col,
-          color: color
+          color: color,
+          archived: archived
         }
 
         cards.push(cardData);     //Add card object to array
 
         //Create the DOM elements and append card
         const editBtn = $("<button>").attr({"class": "edit float-right", "value": id}).html("Edit");
+        const archiveBtn = $("<button>").attr({"class": "archive float-right", "value": id}).html("Archive");
         const deleteBtn = $("<button>").attr({"class": "delete float-right", "value": id}).html("Delete");
-        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html("<p>" + title.substr(0, 250) + "</p><small>" + new Date(date).toISOString().substr(0, 10) + "</small>").append(deleteBtn, editBtn).css({"background": color});
+        const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html("<p>" + title.substr(0, 250) + "</p><small>" + new Date(date).toISOString().substr(0, 10) + "</small>").append(deleteBtn, archiveBtn, editBtn).css({"background": color});
         $(document).find("ul." + col.toLowerCase().replace(" ", "")).append(card);
        
         $(document).find("ul." + col.toLowerCase().replace(" ", "") + " li.empty-list").remove();
