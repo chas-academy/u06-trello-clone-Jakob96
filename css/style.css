@@ -14,8 +14,16 @@ ul {
   list-style-type: none;
 }
 
+small {
+  display: block;
+}
+
 .float-right {
   float: right;
+}
+
+button {
+  font-weight: bold;
 }
 
 button:hover,
@@ -33,7 +41,7 @@ button.add-col {
   top: 10% !important;
   width: 60% !important;
 }
-.ui-dialog #tabs {
+.ui-dialog .tabs {
   margin-bottom: 5px;
 }
 .ui-dialog textarea {
@@ -71,7 +79,7 @@ button.add-col {
 }
 .list .card {
   margin-bottom: 10px;
-  min-height: 80px;
+  min-height: 110px;
 }
 .list .card p {
   margin-top: 2px;

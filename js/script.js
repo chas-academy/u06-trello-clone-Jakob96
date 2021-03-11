@@ -93,7 +93,7 @@ $( function() {
       }
 
       //Get selected card and display data in form
-      const card = getCard(cardId);
+      let card = getCard(cardId);
 
       $("input[name='cardid']").attr("value", card.id);
       $("#card-info #description").html(card.description);
@@ -166,8 +166,8 @@ $( function() {
           columns.push(title);
 
           const section = $("<section>").attr("class", "card-layout");
-          const newCardBtn = $("<button>").attr({"class": "new-card float-right", "aria-label": "Add new card", "data-list": title.toLowerCase().replace(" ", "")}).html("+");
-          const removeColBtn = $("<button>").attr({"class": "remove-col", "aria-label": "Remove list", "data-list": title}).html("-");
+          const newCardBtn = $("<button>").attr({"class": "new-card float-right ui-button ui-widget ui-corner-all", "aria-label": "Add new card", "data-list": title.toLowerCase().replace(" ", "")}).html("+");
+          const removeColBtn = $("<button>").attr({"class": "remove-col ui-button ui-widget ui-corner-all", "aria-label": "Remove list", "data-list": title}).html("-");
           const tab = $("<ul>").append("<li>").html(title).append(removeColBtn, newCardBtn);
           const cardList = $("<ul>").attr("class", "list " + title.toLowerCase().replace(" ", ""));
           addEmptyListText(cardList);
@@ -217,9 +217,9 @@ $( function() {
 
         //Create the DOM elements and append card
         if (!archived) {
-          const editBtn = $("<button>").attr({"class": "edit float-right", "value": id}).html("Edit");
-          const archiveBtn = $("<button>").attr({"class": "archive float-right", "value": id}).html("Archive");
-          const deleteBtn = $("<button>").attr({"class": "delete float-right", "value": id}).html("Delete");
+          const editBtn = $("<button>").attr({"class": "edit float-right ui-button ui-widget ui-corner-all", "value": id}).html("Edit");
+          const archiveBtn = $("<button>").attr({"class": "archive float-right ui-button ui-widget ui-corner-all", "value": id}).html("Archive");
+          const deleteBtn = $("<button>").attr({"class": "delete float-right ui-button ui-widget ui-corner-all", "value": id}).html("Delete");
           const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html("<p>" + title.substr(0, 250) + "</p><small>" + new Date(date).toISOString().substr(0, 10) + "</small>").append(deleteBtn, archiveBtn, editBtn).css({"background": color});
         
           $(document).find("ul." + col.toLowerCase().replace(" ", "")).append(card);
