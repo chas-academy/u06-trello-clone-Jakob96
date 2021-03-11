@@ -108,7 +108,7 @@ $( function() {
       //Add some default data (Current date, text content, list and color)
       const date = new Date();
 
-      addCard("card" + Math.floor(Math.random() * Date.now()), "Write some text...", date, $(this).attr("data-list"), "#f6f6f6");
+      addCard("card" + Math.floor(Math.random() * Date.now()), "Write text here", date, $(this).attr("data-list"), "#f6f6f6");
       localStorage.setItem("cards", JSON.stringify(cards));
     });
 
