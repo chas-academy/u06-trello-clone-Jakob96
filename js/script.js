@@ -150,8 +150,8 @@ $( function() {
           const newCardBtn = $("<button>").attr({"class": "new-card float-right", "aria-label": "Add new card", "data-list": title.toLowerCase().replace(" ", "")}).html("+");
           const removeColBtn = $("<button>").attr({"class": "remove-col", "aria-label": "Remove list", "data-list": title}).html("-");
           const tab = $("<ul>").append("<li>").html(title).append(removeColBtn, newCardBtn);
-          const emptyListText = $("<li>").attr("class", "empty-list").html("Drag a card here");
-          const cardList = $("<ul>").attr("class", "list " + title.toLowerCase().replace(" ", "")).append(emptyListText);
+          const cardList = $("<ul>").attr("class", "list " + title.toLowerCase().replace(" ", ""));
+          addEmptyListText(cardList);
 
           const col = section.append(tab, cardList);
           $("section.flex-grid").append(col);
