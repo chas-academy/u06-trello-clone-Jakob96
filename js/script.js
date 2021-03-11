@@ -1,7 +1,7 @@
 $( function() {
   //Arrays to store data during runtime
-  let columns = [];
-  let cards = [];
+  const columns = [];
+  const cards = [];
 
   //Get erlier stored columns from local storage or add default cols
     if (localStorage.getItem("columns")) {
@@ -93,7 +93,7 @@ $( function() {
       }
 
       //Get selected card and display data in form
-      let card = getCard(cardId);
+      const card = getCard(cardId);
 
       $("input[name='cardid']").attr("value", card.id);
       $("#card-info #description").html(card.description);
@@ -157,7 +157,7 @@ $( function() {
 
     //Method to append an empty list item to inform the user that the list is empty
       function addEmptyListText(element) {
-            const emptyListText = $("<li>").attr("class", "empty-list").html("Drag a card here");
+            const emptyListText = $("<li>").attr("class", "empty-list").html("Add a card here");
             $(element).append(emptyListText);
       }
 
