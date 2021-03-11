@@ -1,7 +1,9 @@
 $( function() {
+  //Arrays to store data during runtime
   let columns = [];
   let cards = [];
 
+  //Get erlier stored columns from local storage or add default cols
     if (localStorage.getItem("columns")) {
       localStorage.getItem("columns").split(",").forEach((item) => {
         addColumn(item);
@@ -12,13 +14,16 @@ $( function() {
       defaultCols.forEach((item) => addColumn(item));
     }
 
+  //Get erlier stored cards from local storage and add them
     if (localStorage.getItem("cards")) {
       let savedCards = JSON.parse(localStorage.getItem("cards"));
       savedCards.forEach((card) => addCard(card.id, card.description, card.date, card.list, card.color));
     }
 
+  //Init Jquery elements
    $( "#tabs" ).tabs();
 
+//My custom widget
    $("#alert").alert({ message: "Your changes has been saved!" });
 
     $("#card-info").dialog({
@@ -38,6 +43,9 @@ $( function() {
       defaultDate: Date.now()
     });
 
+    //Jquery event handlers
+
+    //Elements in dialog
     $("#description, .datepicker").on("change", function() {
         updateCard($("input[name='cardid']").attr("value"), "description", $("#description").val());
         updateCard($("input[name='cardid']").attr("value"), "date", $(".datepicker").val());
@@ -53,6 +61,11 @@ $( function() {
         $("#alert").alert(('open'));
     });
 
+    $("button#formClose").on("click", function() {
+      $("#card-info").dialog("close");
+  });
+
+    //Event handlers on dynamic generated elements had to be attached to document object to work
     $(document).on("click", "button.remove-col", function() {
       const colTitle = $(this).attr("data-list");
       const result = confirm("Are you sure you want to remove the list?");
@@ -65,15 +78,12 @@ $( function() {
       }
     });
 
-    $("button#formClose").on("click", function() {
-        $("#card-info").dialog("close");
-    });
-
+    //Edit card
     $(document).on("click", "button.edit, .card", function(e) {
       let cardId = "";
       $('#card-info').dialog('open').fadeIn();
-      //Check if user clicked on edit button or card
-    
+     
+      //Check if user clicked on edit button or on card directly
       if ($(e.currentTarget).attr("class").toString().includes("edit")) {
         cardId = $(e.currentTarget).attr("value");
       }
@@ -82,6 +92,7 @@ $( function() {
         cardId = $(this).attr("id");
       }
 
+      //Get selected card and display data in form
       let card = getCard(cardId);
 
       $("input[name='cardid']").attr("value", card.id);
@@ -92,13 +103,16 @@ $( function() {
       $("#color").attr("value", card.color);
     });
 
+    //Create card
     $(document).on("click", "button.new-card", function() {
+      //Add some default data (Current date, text content, list and color)
       const date = new Date();
 
       addCard("card" + Math.floor(Math.random() * Date.now()), "Write some text...", date, $(this).attr("data-list"), "#f6f6f6");
       localStorage.setItem("cards", JSON.stringify(cards));
     });
 
+    //Delete card
     $(document).on("click", "button.delete", function() {
       const result = confirm("Are you sure?");
 
@@ -110,6 +124,7 @@ $( function() {
       }
     });
 
+    //Add new list handler
     $("button.add-col").on("click", function() {
       const title = prompt("Enter title");
       
@@ -119,11 +134,15 @@ $( function() {
       }
     });
 
+    //Custom methods
+
+    //Method to append an empty list item to inform the user that the list is empty
       function addEmptyListText(element) {
             const emptyListText = $("<li>").attr("class", "empty-list").html("Drag a card here");
             $(element).append(emptyListText);
       }
 
+      //Add a new column / list
       function addColumn(title) {
           columns.push(title);
 
@@ -137,31 +156,34 @@ $( function() {
           const col = section.append(tab, cardList);
           $("section.flex-grid").append(col);
 
-          $( ".card-layout" ).tabs();
+          $( ".card-layout" ).tabs();   //The list wrapper has to be "tabbed" for each new list
 
-          $( ".list" ).sortable({
-            update: function(event, ui) {
-              updateCard($(ui.item).attr("id"), "list", event.target.classList[1]);
+          $( ".list" ).sortable({       //Make the list sortable
+            update: function(event, ui) {   //Run on each update (a card is moved)
+              updateCard($(ui.item).attr("id"), "list", event.target.classList[1]); //Update the card list property to the targeted list
 
-              if ($("ul." + event.target.classList[1] + " li").length == 0) {
-                  addEmptyListText(this);
+              if ($("ul." + event.target.classList[1] + " li").length == 0) { //If the list is empty add a "empty" list item
+                  addEmptyListText(this);         
               }
               else {
                   $("ul." + event.target.classList[1] + " li").remove(".empty-list");
               }
             },
-              connectWith: ".list",
-              cancel: ".empty-list"
+              connectWith: ".list",     //Connect each list, makes it possible to drag cards to every list
+              cancel: ".empty-list"     //The empty card list item should not be draggable
             }).disableSelection();
       }
 
+      //Method to remove a list column
       function removeColumn(title) {
-        columns.splice(columns.indexOf(title), 1);
+        columns.splice(columns.indexOf(title), 1);      //Splice method removes a string at a given index and the second parameter specifies the number of characters to remove.
+                                                        //indexOf returns the position of title string
 
-        localStorage.setItem("columns", columns.join(","));
+        localStorage.setItem("columns", columns.join(","));   //Save array to local storage
         location.reload();
       }
 
+      //Add a new card
       function addCard(id, title, date, col, color) {
         const cardData = {
           id: id,
@@ -171,8 +193,9 @@ $( function() {
           color: color
         }
 
-        cards.push(cardData);
+        cards.push(cardData);     //Add card object to array
 
+        //Create the DOM elements and append card
         const editBtn = $("<button>").attr({"class": "edit float-right", "value": id}).html("Edit");
         const deleteBtn = $("<button>").attr({"class": "delete float-right", "value": id}).html("Delete");
         const card = $("<li>").attr({"id": id, "class": "ui-state-default card"}).html("<p>" + title.substr(0, 250) + "</p><small>" + new Date(date).toISOString().substr(0, 10) + "</small>").append(deleteBtn, editBtn).css({"background": color});
@@ -181,20 +204,22 @@ $( function() {
         $(document).find("ul." + col.toLowerCase().replace(" ", "") + " li.empty-list").remove();
       }
 
+      //Remove a card
       function removeCard(id) {
-        $("#" + id).remove();
+        $("#" + id).remove();     //Remove from DOM
 
-        for (let i in cards) {
-          if (cards[i].id == id) {
+        for (let i in cards) {          
+          if (cards[i].id == id) {    //Find the matching object in array and remove the element
             cards.splice(i, 1);
             break;
           }
         }
 
         localStorage.setItem("cards", JSON.stringify(cards));
-         window.location.reload();
+         window.location.reload();       //Update DOM
       }
 
+      //Update a card
       function updateCard(id, property, value) {
         for (let i in cards) {
           if (cards[i].id == id) {
@@ -206,6 +231,7 @@ $( function() {
         localStorage.setItem("cards", JSON.stringify(cards));
       };
       
+      //Get a card object from its id
       function getCard(id) {
         for (let i in cards) {
           if (cards[i].id == id) {
