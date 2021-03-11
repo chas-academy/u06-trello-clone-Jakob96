@@ -53,6 +53,18 @@ $( function() {
         $("#alert").alert(('open'));
     });
 
+    $(document).on("click", "button.remove-col", function() {
+      const colTitle = $(this).attr("data-list");
+      const result = confirm("Are you sure you want to remove the list?");
+      
+      if (result) {
+        removeColumn(colTitle);
+      }
+      else {
+        return false;
+      }
+    });
+
     $("button#formClose").on("click", function() {
         $("#card-info").dialog("close");
     });
@@ -117,11 +129,12 @@ $( function() {
 
           const section = $("<section>").attr("class", "card-layout");
           const newCardBtn = $("<button>").attr({"class": "new-card float-right", "aria-label": "Add new card", "data-list": title.toLowerCase().replace(" ", "")}).html("+");
-          const tab = $("<ul>").append("<li>").html(title).append(newCardBtn);
+          const removeColBtn = $("<button>").attr({"class": "remove-col", "aria-label": "Remove list", "data-list": title}).html("-");
+          const tab = $("<ul>").append("<li>").html(title).append(removeColBtn, newCardBtn);
           const emptyListText = $("<li>").attr("class", "empty-list").html("Drag a card here");
           const cardList = $("<ul>").attr("class", "list " + title.toLowerCase().replace(" ", "")).append(emptyListText);
-      
-          const col = section.append(tab).append(cardList);
+
+          const col = section.append(tab, cardList);
           $("section.flex-grid").append(col);
 
           $( ".card-layout" ).tabs();
@@ -140,6 +153,13 @@ $( function() {
               connectWith: ".list",
               cancel: ".empty-list"
             }).disableSelection();
+      }
+
+      function removeColumn(title) {
+        columns.splice(columns.indexOf(title), 1);
+
+        localStorage.setItem("columns", columns.join(","));
+        location.reload();
       }
 
       function addCard(id, title, date, col, color) {
